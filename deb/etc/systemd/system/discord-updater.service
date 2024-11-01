@@ -1,0 +1,11 @@
+[Unit]
+Description=Discord Updater
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/discord-updater
+Type=oneshot
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target

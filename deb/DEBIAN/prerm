@@ -1,0 +1,5 @@
+#!/bin/bash
+if [ -f /etc/systemd/system/discord-updater.service ]; then
+    systemctl stop discord-updater.service
+    systemctl disable discord-updater.service
+fi

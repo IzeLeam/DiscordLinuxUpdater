@@ -1,0 +1,8 @@
+Package: discord-updater
+Version: 0.1
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Kalized
+Description: Automatic updater for Discord.
+  A script that automatically updates Discord and can be launched manually if needed.
