@@ -95,6 +95,10 @@ sudo dpkg -r discord-updater
 discord-updater
 ```
 
+## License
+
+This project is under the MIT License. See the [LICENSE](LICENSE) file for the full license text and details.
+
 ## Help
 
 If you have any question, feel free to ask me on discord: izeleam#0001
