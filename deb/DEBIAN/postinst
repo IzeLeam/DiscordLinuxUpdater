@@ -4,7 +4,6 @@ SERVICE_FILE="/etc/systemd/system/discord-updater.service"
 
 if [ -f "$SERVICE_FILE" ]; then
     systemctl enable discord-updater.service
-    systemctl start discord-updater.service | at now + 1 minute
 else
     echo "Error: $SERVICE_FILE does not exist."
     exit 1
