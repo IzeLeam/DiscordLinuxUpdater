@@ -5,7 +5,7 @@ set -e
 discord_executing=false
 DISCORD_URL="https://discord.com/api/download?platform=linux&format=deb"
 TMP_FILE="/tmp/discord.deb"
-LOG_FILE="/var/log/discord_updater.log"
+LOG_FILE="/var/log/discord-updater.log"
 
 log() {
     echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a $LOG_FILE

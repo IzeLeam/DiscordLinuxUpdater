@@ -2,7 +2,7 @@
 
 SERVICE_FILE="/etc/systemd/system/discord-updater.service"
 DIST_FILE="/usr/local/bin/discord-updater"
-LOG_FILE="/var/log/discord_updater.log"
+LOG_FILE="/var/log/discord-updater.log"
 
 log() {
     echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a $LOG_FILE

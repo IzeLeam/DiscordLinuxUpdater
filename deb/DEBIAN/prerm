@@ -1,5 +1,28 @@
 #!/bin/bash
-if [ -f /etc/systemd/system/discord-updater.service ]; then
-    systemctl stop discord-updater.service
-    systemctl disable discord-updater.service
+
+SERVICE_FILE="/etc/systemd/system/discord-updater.service"
+LOG_FILE="/var/log/discord-updater.log"
+
+log() {
+    echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a $LOG_FILE
+}
+
+err_log() {
+    log "[ERROR] $1"
+}
+
+if [ -f "$SERVICE_FILE" ]; then
+    log "Stopping discord-updater service..."
+    if ! systemctl stop discord-updater.service; then
+        err_log "Failed to stop discord-updater service."
+        exit 1
+    fi
+    log "discord-updater service stopped."
+
+    log "Disabling discord-updater service..."
+    if ! systemctl disable discord-updater.service; then
+        err_log "Failed to disable discord-updater service."
+        exit 1
+    fi
+    log "discord-updater service disabled."
 fi
