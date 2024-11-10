@@ -1,6 +1,6 @@
 # Discord Updater
 
-Bored to update your discord manually every single morning ? This script is made for you !
+Bored to update your discord manually every single day ? Get rid of this awkward situation with Discord Updater !
 
 ## Description
 
@@ -58,7 +58,7 @@ cd DiscordLinuxUpdater
 
 ```bash
 chmod +x build.sh
-./build.sh <build_type>
+./package.sh <build_type>
 ```
 
 * Install the package with the following command:
