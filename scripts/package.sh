@@ -4,6 +4,8 @@ OUT_DIR="out"
 DIST_FILE="dist/discord-updater"
 DEBIAN_DIST_DEST="deb/usr/local/bin"
 
+VERSION=$(cat deb/DEBIAN/control | grep Version | cut -d " " -f 2)
+
 usage() {
     echo "Discord Updater Builder"
     echo "Usage: ./build.sh <build> [OPTIONS] (deb, rpm, arch, snap)"
@@ -38,7 +40,7 @@ fi
 
 if [ "$1" == "deb" ]; then
     echo "Building deb package"
-    dpkg-deb --build deb out/discord-updater.deb
+    dpkg-deb --build deb out/discord-updater-"$VERSION".deb
 elif [ "$1" == "rpm" ]; then
     echo "Building rpm package"
     echo "Not implemented yet"
