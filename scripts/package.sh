@@ -1,5 +1,9 @@
 #!/bin/bash
 
+OUT_DIR="out"
+DIST_FILE="dist/discord-updater"
+DEBIAN_DIST_DEST="deb/usr/local/bin"
+
 usage() {
     echo "Discord Updater Builder"
     echo "Usage: ./build.sh <build> [OPTIONS] (deb, rpm, arch, snap)"
@@ -24,9 +28,12 @@ if [ "$1" == "-v" ] || [ "$1" == "--verbose" ]; then
     set -x
 fi
 
+# Copy binary to packages
+cp "$DIST_FILE" "$DEBIAN_DIST_DEST"
+
 # Create out directory if it doesn't exist
-if [ ! -d "out" ]; then
-    mkdir out
+if [ ! -d "$OUT_DIR" ]; then
+    mkdir "$OUT_DIR"
 fi
 
 if [ "$1" == "deb" ]; then
