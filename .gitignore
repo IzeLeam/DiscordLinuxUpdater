@@ -1,2 +1,5 @@
+# Output folder
 out/
+
+# Duplicate dist files
 deb/usr/local/bin/*
