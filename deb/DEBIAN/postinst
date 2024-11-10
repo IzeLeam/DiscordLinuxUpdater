@@ -1,10 +1,30 @@
 #!/bin/bash
 
 SERVICE_FILE="/etc/systemd/system/discord-updater.service"
+DIST_FILE="/usr/local/bin/discord-updater"
+LOG_FILE="/var/log/discord_updater.log"
 
-if [ -f "$SERVICE_FILE" ]; then
-    systemctl enable discord-updater.service
+log() {
+    echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a $LOG_FILE
+}
+
+err_log() {
+    log "[ERROR] $1"
+}
+
+if [ -f "$SERVICE_FILE" -a -f "$DIST_FILE" ]; then
+    log "Enabling discord-updater service..."
+    if ! systemctl enable discord-updater; then
+        err_log "Failed to enable discord-updater service."
+        exit 1
+    fi
+    log "discord-updater service enabled."
 else
-    echo "Error: $SERVICE_FILE does not exist."
+    if [ ! -f "$SERVICE_FILE" ]; then
+        err_log "Error: $SERVICE_FILE does not exist."
+    fi
+    if [ ! -f "$DIST_FILE" ]; then
+        err_log "Error: $DIST_FILE does not exist."
+    fi
     exit 1
 fi
