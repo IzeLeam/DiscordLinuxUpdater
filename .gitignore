@@ -1,5 +1,5 @@
 # Output folder
 out/
 
-# Duplicate dist files
-deb/usr/local/bin/*
+# Duplicate dist file
+deb/usr/local/bin/discord-updater
