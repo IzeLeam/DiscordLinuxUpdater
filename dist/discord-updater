@@ -1,0 +1,81 @@
+#!/bin/bash
+
+set -e
+
+discord_executing=false
+DISCORD_URL="https://discord.com/api/download?platform=linux&format=deb"
+TMP_FILE="/tmp/discord.deb"
+LOG_FILE="/var/log/discord_updater.log"
+
+log() {
+    echo "$(date +'%Y-%m-%d %H:%M:%S') - $1" | tee -a $LOG_FILE
+}
+
+err_log() {
+    log "[ERROR] $1"
+}
+
+check_root() {
+    if [ "$EUID" -ne 0 ]; then
+        err_log "Please run as root"
+        exit 1
+    fi
+}
+
+kill_discord() {
+    if pgrep -x "Discord" > /dev/null; then
+        discord_executing=true
+        log "Discord is running, closing it..."
+        pkill -x "Discord"
+        sleep 2
+    fi
+}
+
+restart_discord() {
+    if $discord_executing; then
+        log "Restarting discord..."
+        discord &
+    fi
+}
+
+download_discord() {
+    log "Downloading discord last version..."
+    if ! wget -O "$TMP_FILE" "$DISCORD_URL"; then
+        err_log "Failed to download discord."
+        exit 1
+    fi
+}
+
+install_discord() {
+    log "Installing/Updating discord...."
+    if ! apt install -y "$TMP_FILE"; then
+        err_log "Failed to intall/update discord."
+        exit 1
+    fi
+}
+
+remove_discord_tmp_file() {
+    log "Removing discord tempory file at $TMP_FILE..."
+    if ! rm "$TMP_FILE"; then
+        err_log "Failed to remove temp discord file."
+    fi
+}
+
+main() {
+    check_root
+
+    kill_discord
+    
+    download_discord
+    install_discord
+    remove_discord_tmp_file
+    
+    restart_discord
+
+    echo "Discord has been updated successfully!"
+    echo "Done!"
+
+    exit 0
+}
+
+main "$@"
