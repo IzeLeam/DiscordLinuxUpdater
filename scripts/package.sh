@@ -33,11 +33,14 @@ fi
 # Copy binary to packages
 cp "$DIST_FILE" "$DEBIAN_DIST_DEST"
 
-# Create out directory if it doesn't exist
+# Create out directory if it doesn't exist or clean it
 if [ ! -d "$OUT_DIR" ]; then
     mkdir "$OUT_DIR"
+else
+    rm -rf "$OUT_DIR/*"
 fi
 
+# Build package
 if [ "$1" == "deb" ]; then
     echo "Building deb package"
     dpkg-deb --build deb out/discord-updater-"$VERSION".deb
