@@ -1,6 +1,7 @@
 [Unit]
 Description=Discord Updater
-After=network.target
+After=network-online.target
+Requires=network-online.target
 
 [Service]
 ExecStart=/usr/local/bin/discord-updater
