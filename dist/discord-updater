@@ -11,7 +11,7 @@ usage() {
 }
 
 version() {
-    echo "Discord Updater v1.1"
+    echo "Discord Updater v1.1.1"
     exit 0
 }
 
