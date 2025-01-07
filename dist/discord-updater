@@ -2,6 +2,34 @@
 
 set -e
 
+usage() {
+    echo "Usage: $0 [OPTION]"
+    echo "Options:"
+    echo "  -h, --help      Display this help message."
+    echo "  -v, --version   Display the version of the script."
+    exit 0
+}
+
+version() {
+    echo "Discord Updater v1.1"
+    exit 0
+}
+
+if [ $# -gt 0 ]; then
+    case "$1" in
+        -h|--help)
+            usage
+            ;;
+        -v|--version)
+            version
+            ;;
+        *)
+            echo "Invalid option: $1"
+            usage
+            ;;
+    esac
+fi
+    
 discord_executing=false
 DISCORD_URL="https://discord.com/api/download?platform=linux&format=deb"
 TMP_FILE="/tmp/discord.deb"
@@ -40,7 +68,7 @@ restart_discord() {
 
 download_discord() {
     log "Downloading discord last version..."
-    if ! wget -O "$TMP_FILE" "$DISCORD_URL"; then
+    if ! wget -O "$TMP_FILE" "$DISCORD_URL" > /dev/null 2>&1; then
         err_log "Failed to download discord."
         exit 1
     fi
@@ -48,9 +76,18 @@ download_discord() {
 
 install_discord() {
     log "Installing/Updating discord...."
-    if ! apt install -y "$TMP_FILE"; then
-        err_log "Failed to intall/update discord."
-        exit 1
+
+    # Tenter l'installation
+    if apt install -y "$TMP_FILE" > /dev/null 2>&1; then
+        log "Discord has been installed/updated successfully."
+    else
+        # Vérifier si le message d'erreur correspond à un paquet déjà à jour
+        if apt install -y "$TMP_FILE" 2>&1 | grep -q "is already the newest version"; then
+            log "Discord is already up-to-date."
+        else
+            err_log "Failed to install/update discord."
+            exit 1
+        fi
     fi
 }
 
@@ -71,10 +108,6 @@ main() {
     remove_discord_tmp_file
     
     restart_discord
-
-    echo "Discord has been updated successfully!"
-    echo "Done!"
-
     exit 0
 }
 
