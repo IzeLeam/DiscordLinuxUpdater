@@ -43,9 +43,17 @@ err_log() {
     log "[ERROR] $1"
 }
 
+log_stdout() {
+    echo "$(date +'%Y-%m-%d %H:%M:%S') - $1"
+}
+
+err_log_stdout() {
+    log_stdout "[ERROR] $1"
+}
+
 check_root() {
     if [ "$EUID" -ne 0 ]; then
-        err_log "Please run as root"
+        err_log_term "Please run as root"
         exit 1
     fi
 }
@@ -69,6 +77,10 @@ restart_discord() {
 download_discord() {
     log "Downloading discord last version..."
     if ! wget -O "$TMP_FILE" "$DISCORD_URL" > /dev/null 2>&1; then
+        if ! ping -c 1 google.com > /dev/null 2>&1; then
+            err_log "No network connection."
+            exit 1
+        fi
         err_log "Failed to download discord."
         exit 1
     fi
