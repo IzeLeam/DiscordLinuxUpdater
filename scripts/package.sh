@@ -7,7 +7,6 @@ DEBIAN_DIST_DEST="deb/usr/local/bin"
 VERSION=$(cat deb/DEBIAN/control | grep Version | cut -d " " -f 2)
 
 usage() {
-    echo "Discord Updater Builder"
     echo "Usage: ./build.sh <build> [OPTIONS] (deb, rpm, arch, snap)"
     echo ""
     echo "Options:"
@@ -37,7 +36,7 @@ cp "$DIST_FILE" "$DEBIAN_DIST_DEST"
 if [ ! -d "$OUT_DIR" ]; then
     mkdir "$OUT_DIR"
 else
-    rm -rf "$OUT_DIR/*"
+    rm -rf "$OUT_DIR"/*
 fi
 
 # Build package
