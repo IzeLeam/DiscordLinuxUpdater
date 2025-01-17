@@ -53,7 +53,7 @@ err_log_stdout() {
 
 check_root() {
     if [ "$EUID" -ne 0 ]; then
-        err_log_term "Please run as root"
+        err_log_stdout "Please run as root"
         exit 1
     fi
 }
