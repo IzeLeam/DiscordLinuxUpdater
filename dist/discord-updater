@@ -11,7 +11,7 @@ usage() {
 }
 
 version() {
-    echo "Discord Updater v1.1.1"
+    echo "Discord Updater v1.1.2"
     exit 0
 }
 
@@ -30,7 +30,6 @@ if [ $# -gt 0 ]; then
     esac
 fi
     
-discord_executing=false
 DISCORD_URL="https://discord.com/api/download?platform=linux&format=deb"
 TMP_FILE="/tmp/discord.deb"
 LOG_FILE="/var/log/discord-updater.log"
@@ -60,21 +59,27 @@ check_root() {
 
 kill_discord() {
     if pgrep -x "Discord" > /dev/null; then
-        discord_executing=true
         log "Discord is running, closing it..."
         pkill -x "Discord"
-        sleep 2
     fi
-}
 
-restart_discord() {
-    if $discord_executing; then
-        log "Restarting discord..."
-        discord &
+    local max_wait=10
+    while pgrep -x "Discord" > /dev/null && [ $max_wait -gt 0 ]; do
+        sleep 1
+        max_wait=$((max_wait - 1))
+    done
+
+    if pgrep -x "Discord" > /dev/null; then
+        err_log "Failed to close Discord."
+        exit 1
     fi
 }
 
 download_discord() {
+    if [ -f "$TMP_FILE" ]; then
+        log "Removing old discord file..."
+        rm "$TMP_FILE"
+    fi
     log "Downloading discord last version..."
     if ! wget -O "$TMP_FILE" "$DISCORD_URL" > /dev/null 2>&1; then
         if ! ping -c 1 google.com > /dev/null 2>&1; then
@@ -87,20 +92,25 @@ download_discord() {
 }
 
 install_discord() {
-    log "Installing/Updating discord...."
-
-    # Tenter l'installation
-    if apt install -y "$TMP_FILE" > /dev/null 2>&1; then
-        log "Discord has been installed/updated successfully."
-    else
-        # Vérifier si le message d'erreur correspond à un paquet déjà à jour
-        if apt install -y "$TMP_FILE" 2>&1 | grep -q "is already the newest version"; then
-            log "Discord is already up-to-date."
-        else
-            err_log "Failed to install/update discord."
-            exit 1
-        fi
+    log "Installing/Updating Discord..."
+    
+    local output
+    output=$(apt install -y /tmp/discord.deb 2>&1)
+    
+    if echo "$output" | grep -q "is already the newest version"; then
+        log "Discord is already the newest version."
+        notify-send -u normal -i /usr/share/pixmaps/discord.png "Discord Updater" "Discord is already the newest version."
+        return 0
     fi
+    
+    if echo "$output" | grep -q "Error"; then
+        err_log "Failed to install/update Discord. Check logs for details."
+        return 1
+    fi
+    
+    log "Discord installed/updated successfully."
+    notify-send -u normal -i /usr/share/pixmaps/discord.png "Discord Updater" "Discord has been updated successfully to the latest version."
+    return 0
 }
 
 remove_discord_tmp_file() {
@@ -119,7 +129,6 @@ main() {
     install_discord
     remove_discord_tmp_file
     
-    restart_discord
     exit 0
 }
 
