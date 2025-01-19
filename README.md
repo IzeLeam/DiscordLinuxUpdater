@@ -19,7 +19,7 @@ Should work on any linux distribution
 
 * Install the package with the following command:
 ```bash
-sudo apt install ./<package_name>
+sudo dpkg -i <package_name>
 ```
 
 ### From the source code
@@ -70,7 +70,7 @@ sudo systemctl enable discord-updater
 * Uninstall the package with the following command:
 
 ```bash
-sudo apt remove discord-updater
+sudo dpkg -r discord-updater
 ```
 
 ## Usage
