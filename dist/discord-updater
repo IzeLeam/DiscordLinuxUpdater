@@ -58,6 +58,9 @@ check_root() {
 }
 
 installed=$(dpkg -s discord | grep '^Version:' | awk '{print $2}')
+released=$(curl -sI https://discord.com/api/download?platform=linux\&format=deb \
+| grep -i location \
+| grep -oP '/\K[0-9]+\.[0-9]+\.[0-9]+')
 
 kill_discord() {
     if pgrep -x "Discord" > /dev/null; then
