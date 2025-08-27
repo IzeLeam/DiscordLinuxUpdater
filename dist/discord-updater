@@ -57,10 +57,20 @@ check_root() {
     fi
 }
 
-installed=$(dpkg -s discord | grep '^Version:' | awk '{print $2}')
-released=$(curl -sI https://discord.com/api/download?platform=linux\&format=deb \
-| grep -i location \
-| grep -oP '/\K[0-9]+\.[0-9]+\.[0-9]+')
+check_versions() {
+    log "Checking Discord versions ..."
+    local installed=$(dpkg -s discord | grep '^Version:' | awk '{print $2}')
+    local released=$(curl -sI https://discord.com/api/download?platform=linux\&format=deb \
+        | grep -i location \
+        | grep -oP '/\K[0-9]+\.[0-9]+\.[0-9]+')
+
+    log "Installed: $installed | Released: $released"
+
+    if [[ "$installed" == "$released" ]]; then
+        log "Discord is up to date."
+        exit 0
+    fi
+}
 
 kill_discord() {
     if pgrep -x "Discord" > /dev/null; then
@@ -102,12 +112,6 @@ install_discord() {
     local output
     output=$(apt install -y /tmp/discord.deb 2>&1)
     
-    if echo "$output" | grep -q "is already the newest version"; then
-        log "Discord is already the newest version."
-        notify-send -u normal -i /usr/share/pixmaps/discord.png "Discord Updater" "Discord is already the newest version."
-        return 0
-    fi
-    
     if echo "$output" | grep -q "Error"; then
         err_log "Failed to install/update Discord. Check logs for details."
         return 1
@@ -127,6 +131,7 @@ remove_discord_tmp_file() {
 
 main() {
     check_root
+    check_versions
 
     kill_discord
     
