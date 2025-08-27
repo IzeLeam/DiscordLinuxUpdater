@@ -57,6 +57,8 @@ check_root() {
     fi
 }
 
+installed=$(dpkg -s discord | grep '^Version:' | awk '{print $2}')
+
 kill_discord() {
     if pgrep -x "Discord" > /dev/null; then
         log "Discord is running, closing it..."
