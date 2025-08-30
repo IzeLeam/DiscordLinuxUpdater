@@ -38,16 +38,11 @@ git clone "git@github.com:IzeLeam/DiscordLinuxUpdater.git"
 cd DiscordLinuxUpdater
 ```
 
-* Build the package with the build type you want
-    Build types available:
-    * `deb` for debian based distributions
-    * `rpm` for redhat based distributions
-    * `arch` for arch based distributions
-    * `snap` for snap packages
+* Build the package with the following commands:
 
 ```bash
 chmod +x scripts/package.sh
-./scripts/package.sh <build_type>
+./scripts/package.sh
 ```
 
 * Install the package with the following command:
