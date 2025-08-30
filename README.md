@@ -2,9 +2,11 @@
 Bored to update your discord manually **every single day** ? Get rid of this awkward situation with **Discord Updater** !
 
 ## Description
-Don't waste your time for every time you see this annoying update message on discord: *A new version of Discord is available! Please update to continue.* gngngngn...
+Don't waste your time for every time you see this annoying update message on discord: *A new version of Discord is available! Please update.* gngngngn...
 
-Discord Updater will **update your discord automatically** each time you start up your computer. You can also update it manually by running the script.
+![Discord Update Screenshot](assets/update.png)
+
+Discord Updater will **update your discord automatically** at startup so you will never see this message again. You can also update it manually by running the script.
 
 ## Getting Started
 Should work on any linux distribution
