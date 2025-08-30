@@ -4,7 +4,9 @@ Bored to update your discord manually **every single day** ? Get rid of this awk
 ## Description
 Don't waste your time for every time you see this annoying update message on discord: *A new version of Discord is available! Please update.* gngngngn...
 
-![Discord Update Screenshot](.github/assets/update.png)
+<p align="center">
+    <img src=".github/assets/update.png" alt="Discord Update Screenshot" />
+</p>
 
 Discord Updater will **update your discord automatically** at startup so you will never see this message again. You can also update it manually by running the script.
 
