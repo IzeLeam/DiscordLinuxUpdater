@@ -57,6 +57,21 @@ check_root() {
     fi
 }
 
+check_versions() {
+    log "Checking Discord versions ..."
+    local installed=$(dpkg -s discord | grep '^Version:' | awk '{print $2}')
+    local released=$(curl -sI https://discord.com/api/download?platform=linux\&format=deb \
+        | grep -i location \
+        | grep -oP '/\K[0-9]+\.[0-9]+\.[0-9]+')
+
+    log "Installed: $installed | Released: $released"
+
+    if [[ "$installed" == "$released" ]]; then
+        log "Discord is up to date."
+        exit 0
+    fi
+}
+
 kill_discord() {
     if pgrep -x "Discord" > /dev/null; then
         log "Discord is running, closing it..."
