@@ -28,3 +28,8 @@ else
     fi
     exit 1
 fi
+
+log "Setting permissions for $DIST_FILE..."
+chmod 755 $DIST_FILE
+
+log "Installation completed successfully."

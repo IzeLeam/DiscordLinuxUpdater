@@ -2,9 +2,13 @@
 Bored to update your discord manually **every single day** ? Get rid of this awkward situation with **Discord Updater** !
 
 ## Description
-Don't waste your time for every time you see this annoying update message on discord: *A new version of Discord is available! Please update to continue.* gngngngn...
+Don't waste your time for every time you see this annoying update message on discord: *A new version of Discord is available! Please update.* gngngngn...
 
-Discord Updater will **update your discord automatically** each time you start up your computer. You can also update it manually by running the script.
+<p align="center">
+    <img src=".github/update.png" alt="Discord Update Screenshot" />
+</p>
+
+Discord Updater will **update your discord automatically** at startup so you will never see this message again. You can also update it manually by running the script.
 
 ## Getting Started
 Should work on any linux distribution
@@ -38,16 +42,11 @@ git clone "git@github.com:IzeLeam/DiscordLinuxUpdater.git"
 cd DiscordLinuxUpdater
 ```
 
-* Build the package with the build type you want
-    Build types available:
-    * `deb` for debian based distributions
-    * `rpm` for redhat based distributions
-    * `arch` for arch based distributions
-    * `snap` for snap packages
+* Build the package with the following commands:
 
 ```bash
 chmod +x scripts/package.sh
-./scripts/package.sh <build_type>
+./scripts/package.sh
 ```
 
 * Install the package with the following command:

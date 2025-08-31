@@ -1,5 +1,5 @@
-# Output folder
-out/
-
 # Duplicate dist file
 deb/usr/local/bin/discord-updater
+
+# Ignore build files
+*.deb

@@ -11,7 +11,7 @@ usage() {
 }
 
 version() {
-    echo "Discord Updater v1.1.2"
+    echo "Discord Updater v1.2.0"
     exit 0
 }
 
@@ -90,6 +90,22 @@ kill_discord() {
     fi
 }
 
+check_version() {
+    log "Checking Discord versions ..."
+    local installed
+    local released
+
+    installed=$(dpkg -s discord 2>/dev/null | awk '/^Version:/ {print $2}')
+
+    released=$(wget --spider -S "https://discord.com/api/download?platform=linux&format=deb" 2>&1 \
+        | awk '/^Location:/ {match($0, /discord-([0-9]+\.[0-9]+\.[0-9]+)\.deb/, a); print a[1]; exit}')
+
+    if [[ "$installed" == "$released" ]]; then
+        log "Discord is up to date."
+        exit 0
+    fi
+}
+
 download_discord() {
     if [ -f "$TMP_FILE" ]; then
         log "Removing old discord file..."
@@ -131,7 +147,7 @@ remove_discord_tmp_file() {
 
 main() {
     check_root
-    check_versions
+    check_version
 
     kill_discord
     
