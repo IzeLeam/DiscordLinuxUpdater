@@ -83,7 +83,7 @@ check_version() {
     installed=$(dpkg -s discord 2>/dev/null | awk '/^Version:/ {print $2}')
 
     released=$(wget --spider -S "https://discord.com/api/download?platform=linux&format=deb" 2>&1 \
-        | awk '/^Location:/ {match($0, /discord-([0-9]+\.[0-9]+\.[0-9]+)\.deb/, a); print a[1]; exit}')
+        | sed -nE 's/.*discord-([0-9]+\.[0-9]+\.[0-9]+)\.deb.*/\1/p' | head -n1)
 
     if [[ "$installed" == "$released" ]]; then
         log "Discord is up to date."
