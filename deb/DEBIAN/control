@@ -1,8 +1,9 @@
 Package: discord-updater
-Version: 1.2.1
+Version: 1.2.2
 Section: utils
 Priority: optional
 Architecture: all
 Maintainer: Kalized
+Depends: libnotify-bin
 Description: Automatic updater for Discord.
   A script that automatically updates Discord and can be launched manually if needed.

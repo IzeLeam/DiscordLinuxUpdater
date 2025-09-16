@@ -1,21 +1,18 @@
 # Discord Updater
-Bored to update your discord manually **every single day** ? Get rid of this awkward situation with **Discord Updater** !
-
-## Description
-Don't waste your time for every time you see this annoying update message on discord: *A new version of Discord is available! Please update.* gngngngn...
+Bored to update your discord manually **every single day** ? Get rid of this annoying situation with **Discord Updater** !
 
 <p align="center">
     <img src=".github/update.png" alt="Discord Update Screenshot" />
 </p>
 
-Discord Updater will **update your discord automatically** at startup so you will never see this message again. You can also update it manually by running the script.
+Discord Updater will **update your discord automatically** at startup so you will never see this message again.
 
 ## Getting Started
 Should work on any linux distribution
 
 ### Pre-requisites
 * A stable internet connection
-* An access to root privileges (for the installation)
+* An access to root privileges
 
 ## Installation
 ### From the github repository
@@ -23,27 +20,17 @@ Should work on any linux distribution
 
 * Install the package with the following command:
 ```bash
-sudo dpkg -i <package_name>
+sudo apt install <path_to_package>
 ```
 
 ### From the source code
 * Clone the repository
 ```bash
 git clone "https://github.com/IzeLeam/DiscordLinuxUpdater.git"
-```
-
-or
-```bash
-git clone "git@github.com:IzeLeam/DiscordLinuxUpdater.git"
-```
-
-* Go to the repository
-```bash
 cd DiscordLinuxUpdater
 ```
 
 * Build the package with the following commands:
-
 ```bash
 chmod +x scripts/package.sh
 ./scripts/package.sh
@@ -51,31 +38,25 @@ chmod +x scripts/package.sh
 
 * Install the package with the following command:
 ```bash
-sudo dpkg -i <package_name>
+sudo apt install <path_to_package>
 ```
 
-The automatic update is already set up by default. You can disable it by running the following command:
+The automatic update is already set up by default. You can disable/enable it with the following command:
 ```bash
-sudo systemctl disable discord-updater
-```
-
-And enable it by running the following command:
-
-```bash
-sudo systemctl enable discord-updater
-```
-
-## Uninstallation
-* Uninstall the package with the following command:
-
-```bash
-sudo dpkg -r discord-updater
+sudo systemctl disable/enable discord-updater
 ```
 
 ## Usage
 * Run the script
 ```bash
 discord-updater
+```
+
+## Uninstallation
+* Uninstall the package with the following command:
+
+```bash
+sudo apt remove discord-updater
 ```
 
 ## License
